@@ -51,11 +51,16 @@ const Support = () => {
     }
   };
 
+  const [myIncidents] = useState<any[]>([
+    { id: 1, subject: 'Leakage', status: 'resolved', timestamp: new Date().toISOString() },
+    { id: 2, subject: 'Waste', status: 'open', timestamp: new Date().toISOString() }
+  ]);
+
   return (
-    <div className="flex-center" style={{ minHeight: '80vh', padding: '2rem' }}>
+    <div className="flex-center" style={{ minHeight: '80vh', padding: '2rem', flexDirection: 'column' }}>
       <motion.div 
         className="glass-card" 
-        style={{ width: '100%', maxWidth: '500px', padding: '2.5rem' }}
+        style={{ width: '100%', maxWidth: '500px', padding: '2.5rem', marginBottom: '2rem' }}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
@@ -111,6 +116,36 @@ const Support = () => {
           </button>
         </form>
       </motion.div>
+
+      {/* User Reports Tracker */}
+      <div style={{ width: '100%', maxWidth: '500px' }}>
+        <h3 className="mb-4">My Recent Reports</h3>
+        <div className="grid">
+          {myIncidents.map(inc => (
+            <div key={inc.id} className="glass-card" style={{ padding: '1.25rem' }}>
+              <div className="flex-between mb-2">
+                <span className="font-bold">{inc.subject}</span>
+                <span className="text-xs text-muted">{new Date(inc.timestamp).toLocaleDateString()}</span>
+              </div>
+              <div className="flex-between text-xs mb-1">
+                <span className="text-muted">Status: {inc.status === 'resolved' ? 'Fixed' : 'Pending'}</span>
+                <span className={inc.status === 'resolved' ? 'text-green-400' : 'text-primary'}>
+                  {inc.status === 'resolved' ? '100%' : '20%'}
+                </span>
+              </div>
+              <div className="progress-track" style={{ margin: '0.5rem 0' }}>
+                <div 
+                  className="progress-fill" 
+                  style={{ 
+                    width: inc.status === 'resolved' ? '100%' : '20%',
+                    background: inc.status === 'resolved' ? 'var(--color-green)' : 'var(--color-primary)'
+                  }} 
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

@@ -246,6 +246,22 @@ const MentorPanel = () => {
                     )}
                   </div>
                 </div>
+                <div className="mt-4 mb-2 flex-between text-xs">
+                  <span className="text-muted">Resolution Progress</span>
+                  <span className={incident.status === 'resolved' ? 'text-green-400 font-bold' : 'text-primary font-bold'}>
+                    {incident.status === 'resolved' ? '100%' : '20% (Acknowledged)'}
+                  </span>
+                </div>
+                <div className="progress-track">
+                  <div 
+                    className="progress-fill" 
+                    style={{ 
+                      width: incident.status === 'resolved' ? '100%' : '20%',
+                      background: incident.status === 'resolved' ? 'var(--color-green)' : 'var(--color-primary)' 
+                    }}
+                  />
+                </div>
+
                 <div className="p-3 bg-black/30 rounded border border-white/5 text-sm italic">
                   "{incident.description}"
                 </div>
